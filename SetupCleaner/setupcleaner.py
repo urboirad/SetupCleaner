@@ -4,6 +4,7 @@ from pyglet import font
 from pyglet import shapes
 from pyglet.window import mouse
 from pathlib import Path
+from pprint import pprint
 
 # Set up pyglet
 window = pyglet.window.Window()
@@ -31,7 +32,7 @@ class Button():
         self.text.draw()
 
 # Search for installation files
-possibleExtensions = ('-setup.exe', '-installer.exe', 'Installer.exe', '.msi', '.msm', '.msp', '.mst', '.msu', '.idt', '.cub', '.pcp', "-x64.exe", "-x86.exe")
+possibleExtensions = ('setup.exe', '-installer.exe', 'Installer.exe', '.msi', '.msm', '.msp', '.mst', '.msu', '.idt', '.cub', '.pcp', "-x64.exe", "-x86.exe", "-amd64.exe", "-x32.exe", "-amd32.exe", "-win64.exe")
 
 # Search for duplicate installation files
 s = list(possibleExtensions)
@@ -45,6 +46,11 @@ path = str(Path.home() / "Downloads")
 
 # Get list of files
 files = [x for x in os.listdir(path) if x.endswith(possibleExtensions)]
+sw_files = [x for x in os.listdir(path) if x.startswith("setup")]
+for x in sw_files:
+    files.append(x)
+print ("Files that will be deleted:")
+pprint(files)
 
 # Get size of files
 filesSize = 0
@@ -79,11 +85,25 @@ def delete_files():
 title = pyglet.text.Label('Setup Cleaner', font_name='VCRosdNEUE', font_size=36, x=window.width // 2, y=450, anchor_x='center', anchor_y='center')
 subTitle = pyglet.text.Label('Script By: RAD', font_name='VCRosdNEUE', font_size=18, x=window.width // 2, y=400, anchor_x='center', anchor_y='center')
 size = pyglet.text.Label('Size: ' + str(filesSize) +'MB', font_name='VCRosdNEUE', font_size=18, x=10, y=60, anchor_x='left', anchor_y='center')
-filesList = pyglet.text.Label('Files that will be deleted: ' + str(files), font_name='VCRosdNEUE', font_size=12, x=10, y=20, anchor_x='left', anchor_y='center')
+files_twbp = pyglet.text.Label('Files that will be deleted:', font_name='VCRosdNEUE', font_size=12, x=10, y=38, anchor_x='left', anchor_y='center')
+filesList = pyglet.text.Label(str(files), font_name='VCRosdNEUE', font_size=12, x=10, y=20, anchor_x='left', anchor_y='center')
 status = pyglet.text.Label('CLEANED', font_name='VCRosdNEUE', font_size=24, x=window.width // 2, y=200, anchor_x='center', anchor_y='center')
 
 # Buttons
 startButton = Button(window.width // 2 - 50, 200, 100, 50, False, "CLEAN", (55, 55, 255), batch, 0, True)
+
+# Files List Movement
+clk = pyglet.clock.get_default()
+def callback(dt):
+    filesList.x -= 0.05
+    if len(files) > 10:
+        if filesList.x < -window.width*2:
+            filesList.x = 10
+    else:
+        if filesList.x < -window.width*2:
+            filesList.x = 10
+    
+clk.schedule(callback)
 
 # Draw
 @window.event
@@ -92,11 +112,12 @@ def on_draw():
     title.draw()
     subTitle.draw()
     size.draw()
+    files_twbp.draw()
     filesList.draw()
     if not files:
         filesList.text = "There are no files to be deleted..."
     else:
-        filesList.text = "Files that will be deleted: " + str(files)
+        filesList.text = str(files)
     if startButton.visible:
         startButton.draw()
     else:
