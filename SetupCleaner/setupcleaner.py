@@ -32,7 +32,7 @@ class Button():
         self.text.draw()
 
 # Search for installation files
-possibleExtensions = ('setup.exe', '-installer.exe', 'Installer.exe', '.msi', '.msm', '.msp', '.mst', '.msu', '.idt', '.cub', '.pcp', "-x64.exe", "-x86.exe", "-amd64.exe", "-x32.exe", "-amd32.exe", "-win64.exe")
+possibleExtensions = ('setup.exe', '-installer.exe', 'Installer.exe', '.msi', '.msm', '.msp', '.mst', '.msu', '.idt', '.cub', '.pcp', "-x64.exe", "-x86.exe", "-amd64.exe", "-x32.exe", "-amd32.exe", "-win64.exe", "-64-bit.exe",  "-32-bit.exe")
 
 # Search for duplicate installation files
 s = list(possibleExtensions)
@@ -95,13 +95,13 @@ startButton = Button(window.width // 2 - 50, 200, 100, 50, False, "CLEAN", (55, 
 # Files List Movement
 clk = pyglet.clock.get_default()
 def callback(dt):
-    filesList.x -= 0.05
-    if len(files) > 10:
-        if filesList.x < -window.width*2:
-            filesList.x = 10
-    else:
-        if filesList.x < -window.width*2:
-            filesList.x = 10
+    if sum(len(i) for i in files) > 113:
+        filesList.x -= 0.02
+    if filesList.text == "Files deleted successfully!":
+        filesList.x = 10
+        
+    if filesList.x < -window.width/2:
+        filesList.x = 10
     
 clk.schedule(callback)
 
