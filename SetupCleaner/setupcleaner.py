@@ -32,7 +32,7 @@ class Button():
         self.text.draw()
 
 # Search for installation files
-possibleExtensions = ('setup.exe', '-installer.exe', 'Installer.exe', '.msi', '.msm', '.msp', '.mst', '.msu', '.idt', '.cub', '.pcp', "-x64.exe", "-x86.exe", "-amd64.exe", "-x32.exe", "-amd32.exe", "-win64.exe", "-64-bit.exe",  "-32-bit.exe")
+possibleExtensions = ('setup.exe', 'Setup.exe', '-installer.exe', 'Installer.exe', '.msi', '.msm', '.msp', '.mst', '.msu', '.idt', '.cub', '.pcp', "-x64.exe", "-x86.exe", "-amd64.exe", "-x32.exe", "-amd32.exe", "-win64.exe", "-64-bit.exe",  "-32-bit.exe")
 
 # Search for duplicate installation files
 s = list(possibleExtensions)
