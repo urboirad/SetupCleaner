@@ -1,8 +1,13 @@
 import os
+import sys
+
 import pyglet
 from pyglet import font
 from pyglet import shapes
+from pyglet import image
 from pyglet.window import mouse
+from pyglet.gl import *
+
 from pathlib import Path
 from pprint import pprint
 
@@ -11,6 +16,11 @@ window = pyglet.window.Window()
 batch = pyglet.graphics.Batch()
 font.add_file('Assets/VCRosdNEUE.ttf')
 VCRosdNEUE = font.load('VCRosdNEUE', 16)
+font_name = 'VCRosdNEUE'
+
+logo = image.load('Assets/logo.png')
+logo.anchor_x = logo.width // 2
+logo.anchor_y = logo.height // 2
 
 # Variables
 Cleaning = False
@@ -24,7 +34,7 @@ for x in range(1, 1000):
 class Button():
     def __init__(self, x, y, width, height, hover, text, color, batch, button, visible):
         self.x, self.y, self.width, self.height = x, y, width, height
-        self.hover, self.text, self.color, self.batch, self.visible = hover, pyglet.text.Label(text, font_name='VCRosdNEUE', font_size=24, x=self.x + self.width // 2, y=self.y + self.height // 2, anchor_x='center', anchor_y='center'), color, batch, True
+        self.hover, self.text, self.color, self.batch, self.visible = hover, pyglet.text.Label(text, font_name=font_name, font_size=24, x=self.x + self.width // 2, y=self.y + self.height // 2, anchor_x='center', anchor_y='center'), color, batch, True
         self.button = shapes.Rectangle(self.x, self.y, self.width, self.height, self.color, self.batch)
 
     def draw(self):
@@ -33,7 +43,7 @@ class Button():
 
 # Search for installation files
 possibleExtensions = ('setup.exe', 'Setup.exe', '-installer.exe', 'Installer.exe', '.msi', '.msm', '.msp', '.mst', '.msu', '.idt', '.cub', '.pcp', "-x64.exe", "-x86.exe", "-amd64.exe", "-x32.exe", "-amd32.exe", "-win64.exe", "-64-bit.exe",  "-32-bit.exe")
-
+badExtensions = ('.jpg', '.png', '.gif', '.webp', '.tiff', '.psd', '.raw', '.bmp', '.heif', '.indd', '.jpeg2000', '.svg', '.ai', '.eps', '.pdf')
 # Search for duplicate installation files
 s = list(possibleExtensions)
 for x in numExtensions:
@@ -49,6 +59,8 @@ files = [x for x in os.listdir(path) if x.endswith(possibleExtensions)]
 sw_files = [x for x in os.listdir(path) if x.startswith("setup")]
 for x in sw_files:
     files.append(x)
+    if x.endswith(badExtensions):
+        files.remove(x)
 print ("Files that will be deleted:")
 pprint(files)
 
@@ -82,12 +94,12 @@ def delete_files():
     files = [x for x in os.listdir(path) if x.endswith(extneions)]
 
 # Labels
-title = pyglet.text.Label('Setup Cleaner', font_name='VCRosdNEUE', font_size=36, x=window.width // 2, y=450, anchor_x='center', anchor_y='center')
-subTitle = pyglet.text.Label('Script By: RAD', font_name='VCRosdNEUE', font_size=18, x=window.width // 2, y=400, anchor_x='center', anchor_y='center')
-size = pyglet.text.Label('Size: ' + str(filesSize) +'MB', font_name='VCRosdNEUE', font_size=18, x=10, y=60, anchor_x='left', anchor_y='center')
-files_twbp = pyglet.text.Label('Files that will be deleted:', font_name='VCRosdNEUE', font_size=12, x=10, y=38, anchor_x='left', anchor_y='center')
-filesList = pyglet.text.Label(str(files), font_name='VCRosdNEUE', font_size=12, x=10, y=20, anchor_x='left', anchor_y='center')
-status = pyglet.text.Label('CLEANED', font_name='VCRosdNEUE', font_size=24, x=window.width // 2, y=200, anchor_x='center', anchor_y='center')
+#title = pyglet.text.Label('Setup Cleaner', font_name=font_name, font_size=36, x=window.width // 2, y=450, anchor_x='center', anchor_y='center')
+#subTitle = pyglet.text.Label('Script By: RAD', font_name=font_name, font_size=18, x=window.width // 2, y=400, anchor_x='center', anchor_y='center')
+size = pyglet.text.Label('Size: ' + str(filesSize) +'MB', font_name=font_name, font_size=18, x=10, y=60, anchor_x='left', anchor_y='center')
+files_twbp = pyglet.text.Label('Files that will be deleted:', font_name=font_name, font_size=12, x=10, y=38, anchor_x='left', anchor_y='center')
+filesList = pyglet.text.Label(str(files), font_name=font_name, font_size=12, x=10, y=20, anchor_x='left', anchor_y='center')
+status = pyglet.text.Label('CLEANED', font_name=font_name, font_size=24, x=window.width // 2, y=200, anchor_x='center', anchor_y='center')
 
 # Buttons
 startButton = Button(window.width // 2 - 50, 200, 100, 50, False, "CLEAN", (55, 55, 255), batch, 0, True)
@@ -109,8 +121,9 @@ clk.schedule(callback)
 @window.event
 def on_draw():
     window.clear()
-    title.draw()
-    subTitle.draw()
+    logo.blit((window.width // 2) + 40, 380)
+    #title.draw()
+    #subTitle.draw()
     size.draw()
     files_twbp.draw()
     filesList.draw()
