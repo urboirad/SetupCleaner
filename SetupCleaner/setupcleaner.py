@@ -14,11 +14,11 @@ from pprint import pprint
 # Set up pyglet
 window = pyglet.window.Window()
 batch = pyglet.graphics.Batch()
-font.add_file('Assets/VCRosdNEUE.ttf')
+font.add_file('VCRosdNEUE.ttf')
 VCRosdNEUE = font.load('VCRosdNEUE', 16)
 font_name = 'VCRosdNEUE'
 
-logo = image.load('Assets/logo.png')
+logo = image.load('logo.png')
 logo.anchor_x = logo.width // 2
 logo.anchor_y = logo.height // 2
 
