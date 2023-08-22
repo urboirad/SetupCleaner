@@ -6,7 +6,8 @@ Python script with GUI (made with Pyglet) that searches for installation/setup f
 # Install
 1. Download latest release
 2. Extract folder
-3. In the "SetupCleaner" folder you can find the setupcleaner.exe file.
+3. Extract the SetupCleaner folder from SetupCleaner.rar
+4. In the "SetupCleaner" folder you can find the setupcleaner.exe file.
 
 # How it works
 1. Searches through the user's download folder for files ending with file extensions listed in the "possibleExtenions" list.
