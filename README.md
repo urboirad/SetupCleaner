@@ -1,4 +1,4 @@
-![setupCleaner_logo](https://github.com/urboirad/SetupCleaner/assets/97897450/70760984-0454-48ca-b3ca-07bbe1054133)
+![1705719468649](https://github.com/urboirad/SetupCleaner/assets/97897450/ac675b58-00e2-42d0-818e-f7187d30d0bd)
 
 # Install
 1. Download latest release
