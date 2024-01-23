@@ -7,10 +7,10 @@
 4. In the "SetupCleaner" folder you can find the setupcleaner.exe file.
 
 # How it works
-1. Searches through the user's download folder for files ending with file extensions listed in the "possibleExtenions" list.
+1. Searches through the user's download folder for files ending with file extensions listed in the "possibleExtenions" list (.exe, .msi, etc.).
 2. Generates a list of the installation files picked up.
-3. Looks through the generated list of files and removes files that shouldn't be there. (These could be images that have words like "setup" in the their name).
-4. GUI using the Pyglet library is created showing the list of files along with a handy CLEAN button. (This list can also be seen in the terminal)
+3. Looks through the generated list of files and removes files that shouldn't be there. (These could be applications that have words like "setup" in the their name).
+4. GUI made using the Pyglet library is created showing the list of files along with a handy CLEAN button. (This list can also be seen in the terminal)
 
 
 # Full Code Breakdown
